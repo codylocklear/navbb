@@ -1,0 +1,4 @@
+#wpfooter {
+  position: static;
+}
+/* Forces the footer bar in admin to float to the bottom of the page instead of block damn content on our page */

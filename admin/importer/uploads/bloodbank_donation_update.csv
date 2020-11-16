@@ -1,0 +1,5 @@
+id,donor_id,donation_date,amount_donated,amount_potential,recumbency,vein,crt,mm,weight,temperature,heartrate,respiration,pcv,ts,donation_notes,donation_number,holder,poker,outcome
+98,52,2020-04-31,450,450,Standing,Right Jugular,1(<1 second),pink,32.5,100.1,20,Pant,12,0,Text Here,1,1,2,Success
+99,53,2020-04-31,450,450,Sitting,Left Jugular,2(1-2 seconds),blue,50,98.4,23,24,0,0,Anything Goes,2,3,4,Failure
+100,,2020-12-31,450,450,Left Lateral,Right Jugular,3(>2 seconds),grey,15.5,97,,,,,,,,,Ineligible
+105,,,450,450,Right Lateral,Left Jugular,,white,,,,,,,,,,,

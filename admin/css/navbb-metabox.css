@@ -1,0 +1,114 @@
+/* Metabox and General Form CSS */
+
+.navbb-metabox-container{
+  overflow: auto;
+  padding: 1em;
+}
+
+.navbb-column-content{
+  padding: 10px 5px;
+}
+
+.navbb-column-left, .navbb-column-right {
+  float: left;
+  width: 50%;
+}
+
+.navbb-column-three {
+  float: left;
+  width: 33%;
+}
+
+/* Clear floats after the columns */
+.navbb-lab-column-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.navbb-row-title{
+    display: block;
+    float: left;
+    width: 200px;
+}
+
+.navbb-row-content{
+    float: left;
+    padding-bottom: 1em;
+}
+
+.navbb-row-content label{
+    display: block;
+    line-height: 2.25em;
+}
+
+.navbb-row-content span{
+    display: block;
+    line-height: 2.25em;
+}
+
+.navbb-row-input {
+    width: 200px;
+}
+
+.navbb-row-container {
+    display: block;
+    clear: both;
+    overflow: hidden;
+    padding-bottom: 1em;
+    padding-right: 10px;
+}
+
+/* This is for Individual Donation page */
+.navbb-row-saved-title{
+    display: block;
+    float: left;
+    width: 300px;
+}
+
+.navbb-row-saved-value {
+  display: block;
+}
+
+/* this is locate on the add new donation page */
+.navbb-donation-page-container {
+  background: white;
+  padding: 20px;
+  margin: 30px;
+}
+
+/* this is locate on the add new donation page */
+.navbb-dashboard-page-container {
+  background: white;
+  padding: 30px;
+  margin: 10px;
+}
+
+/* css for Custom Attachment Metabox */
+.navbb-pdf-list{
+
+  margin-bottom: 10px;
+
+  border-color: #0E4E91;
+  background-color: #0E4E91;
+  color: #fff;
+  font-weight: 500;
+
+  /* font-size: 1.8rem; */
+  padding: 8px 30px;
+  border-radius: 6px;
+  border: solid 2px #0E4E91;
+  display: inline-block;
+  /* text-decoration: none; */
+  /* background: transparent; */
+}
+
+a:link.navbb-pdf-list{
+  text-align: center;
+}
+
+a:hover.navbb-pdf-list{
+  text-decoration: none;
+  background-color: #0958ab;
+  border-color: #0958ab;
+}
