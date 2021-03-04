@@ -34,22 +34,30 @@ if ( isset( $_GET['donor_id'] ) ) {
 
 					<div class="navbb-row-container">
 			      <label for="donor_name" class="navbb-row-title">Donor Name:</label>
-						<input type="text" name="donor_name" id="donor_name" class="autocomplete_donors navbb-row-input" value="<?php echo $donor_fullname; ?>" placeholder="Select Donor"  onchange="donorDonationChange()">
+            <div class="navbb-row-content">
+						  <input type="text" name="donor_name" id="donor_name" class="autocomplete_donors navbb-row-input" value="<?php echo $donor_fullname; ?>" placeholder="Select Donor"  onchange="donorDonationChange()">
+            </div>
 					</div>
 
 					<div class="navbb-row-container">
 			      <label for="donation_date" class="navbb-row-title">Donation Date:</label>
-			      <input type="text" name="donation_date" id="donation_date" class="custom_date navbb-row-input">
+            <div class="navbb-row-content">
+			        <input type="text" name="donation_date" id="donation_date" class="custom_date navbb-row-input">
+            </div>
 					</div>
 
 					<div class="navbb-row-container">
 						<label for="amount_potential" class="navbb-row-title">Volume to be Drawn (ml):</label>
-						<input type="number" name="amount_potential" id="amount_potential" class="navbb-row-input" min="0" max="2000">
+            <div class="navbb-row-content">
+						  <input type="number" name="amount_potential" id="amount_potential" class="navbb-row-input" min="0" max="2000">
+            </div>
 					</div>
 
 					<div class="navbb-row-container">
 			      <label for="amount_donated" class="navbb-row-title">Volume Drawn (ml):</label>
-			      <input type="number" name="amount_donated" id="amount_donated" class="navbb-row-input" min="0" max="2000">
+            <div class="navbb-row-content">
+			        <input type="number" name="amount_donated" id="amount_donated" class="navbb-row-input" min="0" max="2000">
+            </div>
 					</div>
 
 		      <div class="navbb-row-container">
@@ -115,12 +123,16 @@ if ( isset( $_GET['donor_id'] ) ) {
 
 					<div class="navbb-row-container">
 			      <label for="weight" class="navbb-row-title">Weight (kg):</label>
-			      <input type="number" name="weight" id="weight" class="navbb-row-input"  pattern="^\d+(?:\.\d{1,2})?$" step="0.1">
+            <div class="navbb-row-content">
+			        <input type="number" name="weight" id="weight" class="navbb-row-input"  pattern="^\d+(?:\.\d{1,2})?$" step="0.1">
+            </div>
 					</div>
 
 					<div class="navbb-row-container">
 			      <label for="temperature" class="navbb-row-title">Temperature (deg):</label>
-			      <input type="number" name="temperature" id="temperature" class="navbb-row-input"  pattern="^\d+(?:\.\d{1})?$" step="0.1" >
+            <div class="navbb-row-content">
+			        <input type="number" name="temperature" id="temperature" class="navbb-row-input"  pattern="^\d+(?:\.\d{1})?$" step="0.1" >
+            </div>
 					</div>
 
 				</div>
@@ -129,23 +141,45 @@ if ( isset( $_GET['donor_id'] ) ) {
 
 					<div class="navbb-row-container">
 						<label for="heartrate" class="navbb-row-title">Heart Rate (bpm):</label>
-						<input type="number" name="heartrate" id="heartrate" class="navbb-row-input" pattern="^[\d]*$" step="1">
+            <div class="navbb-row-content">
+						  <input type="number" name="heartrate" id="heartrate" class="navbb-row-input" pattern="^[\d]*$" step="1">
+            </div>
 					</div>
 
 					<div class="navbb-row-container">
 						<label for="respiration" class="navbb-row-title">Respiratory Rate (bpm):</label>
-						<input type="text" name="respiration" id="respiration" class="navbb-row-input"  placeholder="Pant or ##.#">
+            <div class="navbb-row-content">
+						  <input type="text" name="respiration" id="respiration" class="navbb-row-input"  placeholder="Pant or ##.#">
+            </div>
 					</div>
 
 					<div class="navbb-row-container">
 			      <label for="pcv" class="navbb-row-title">PCV (%):</label>
-			      <input type="number" name="pcv" id="pcv" class="navbb-row-input">
+            <div class="navbb-row-content">
+			        <input type="number" name="pcv" id="pcv" class="navbb-row-input">
+            </div>
 					</div>
 
 					<div class="navbb-row-container">
 						<label for="ts" class="navbb-row-title">TS (g/dl):</label>
-						<input type="number" name="ts" id="ts" class="navbb-row-input" step="0.1">
+            <div class="navbb-row-content">
+						  <input type="number" name="ts" id="ts" class="navbb-row-input" step="0.1">
+            </div>
 					</div>
+
+          <div class="navbb-row-container">
+            <label for="collections" class="navbb-row-title">Number of Collection Units:</label>
+            <div class="navbb-row-content">
+              <select name="collections" id="collections" class="navbb-row-input">
+                <option value="" selected="selected" disabled hidden>Select Number</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+                <option value="4">Four</option>
+                <option value="5">Five</option>
+              </select>
+            </div>
+          </div>
 
 					<div class="navbb-row-container">
 						<label for="holder" class="navbb-row-title">Holder:</label>
@@ -166,7 +200,8 @@ if ( isset( $_GET['donor_id'] ) ) {
 						<div class="navbb-row-content">
 							<select name="outcome" id="outcome" class="navbb-row-input">
 								<option value="" selected="selected" disabled hidden>Select Outcome</option>
-								<option value="Success">Successful</option>
+								<option value="Success">Successful: 2 Units</option>
+                <option value="SuccessOneUnit">Successful: 1 Unit</option>
 								<option value="Failure">Not Successful</option>
 								<option value="Ineligible">Ineligible</option>
 							</select>

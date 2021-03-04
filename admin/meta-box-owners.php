@@ -46,13 +46,7 @@ function navbb_owners_build_meta_box($post) {
 
         <div class="navbb-row-container">
           <label for="donation_location" class="navbb-row-title">Donation Location:</label>
-            <select name="donation_location" id="donation_location" class="navbb-row-input">
-              <option value="" <?php if( empty($current_donation_location) ): ?> selected="selected" <?php endif; ?> disabled hidden>Select Location</option>
-              <option value="Bristow"<?php if( "Bristow" == $current_donation_location ): ?> selected="selected"<?php endif; ?>>Bristow</option>
-              <option value="Richmond"<?php if( "Richmond" == $current_donation_location ): ?> selected="selected"<?php endif; ?>>Richmond</option>
-              <option value="Stafford"<?php if( "Stafford" == $current_donation_location ): ?> selected="selected"<?php endif; ?>>Stafford</option>
-              <option value="Not Applicable"<?php if( "Not Applicable" == $current_donation_location ): ?> selected="selected"<?php endif; ?>>Not Applicable</option>
-            </select>
+          <?php  echo( select_locations( option_locations( 'Select Location', $current_donation_location ), 'donation_location', 'navbb-row-input' ) );  ?>
         </div>
 
         <div class="navbb-row-container">

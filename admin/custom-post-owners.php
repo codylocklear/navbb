@@ -49,6 +49,15 @@ function navbb_owners_table_head( $defaults ) {
 }
 
 
+//This function adds our custom column to the list of sortable columns for our post type
+add_filter( 'manage_edit-navbb_owners_sortable_columns', 'navbb_owners_sortable_columns');
+function navbb_owners_sortable_columns( $columns ) {
+	$columns['internalOwnerID'] = 'Owner ID';
+  $columns['first_name']  = 'First Name';
+  return $columns;
+}
+
+
 //This queries the post_meta database and populates the table
 add_action( 'manage_navbb_owners_posts_custom_column', 'navbb_owners_table_content', 10, 2 );
 function navbb_owners_table_content( $column_name, $post_id ) {
@@ -70,25 +79,7 @@ function navbb_owners_table_content( $column_name, $post_id ) {
 }
 
 
-//This function changes the placeholder in the title box in add new owner
-add_filter( 'enter_title_here', 'navbb_owners_change_title_text' );
-function navbb_owners_change_title_text( $title ){
-     $screen = get_current_screen();
-     if  ( 'navbb_owners' == $screen->post_type ) {
-          $title = "Enter Owner's Last Name";
-     }
-     return $title;
-}
-
-
-//This function adds our custom column to the list of sortable columns for our post type
-add_filter( 'manage_edit-navbb_owners_sortable_columns', 'navbb_owners_sortable_columns');
-function navbb_owners_sortable_columns( $columns ) {
-	$columns['internalOwnerID'] = 'Owner ID';
-  return $columns;
-}
-
-
+//Set the Query by which we sort the posts
 add_action( 'pre_get_posts', 'navbb_owners_orderby' );
 function navbb_owners_orderby( $query ) {
   if( ! is_admin() || ! $query->is_main_query() ) {
@@ -98,4 +89,19 @@ function navbb_owners_orderby( $query ) {
 		$query->set( 'orderby', 'meta_value' );
 		$query->set( 'meta_key', '_navbb_owners_internalOwnerID' );
 	}
+  if ( 'First Name' === $query->get( 'orderby') ) {
+    $query->set( 'orderby', 'meta_value' );
+    $query->set( 'meta_key', '_navbb_owners_first_name' );
+  }
+}
+
+
+//This function changes the placeholder in the title box in add new owner
+add_filter( 'enter_title_here', 'navbb_owners_change_title_text' );
+function navbb_owners_change_title_text( $title ){
+  $screen = get_current_screen();
+    if  ( 'navbb_owners' == $screen->post_type ) {
+      $title = "Enter Owner's Last Name";
+    }
+  return $title;
 }

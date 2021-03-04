@@ -178,7 +178,9 @@ function navbb_donation_render_individual_donation_page(){
 					<div class=navbb-row-saved-value>
 						<?php
 						if($current_outcome == "Success"){
-							echo "Successful" ;
+							echo "Successful: 2 Units";
+            } elseif ($current_outcome == "SuccessOneUnit") {
+              echo "Successful: 1 Unit";
 						} elseif ($current_outcome == "Failure") {
 							echo "Not Successful";
 						} elseif ($current_outcome == "Ineligible") {

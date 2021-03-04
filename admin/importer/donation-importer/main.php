@@ -10,8 +10,6 @@
  * License: GPL2
  */
 
-//Slug - wpcsvdb
-
 class wp_csv_to_db {
 
   // Setup options variables
@@ -33,7 +31,7 @@ class wp_csv_to_db {
   }
 
   public function wp_csv_to_db_register() {
-    $wp_csv_to_db_page = add_submenu_page( 'navbb', __( 'CSV Importer', 'wp_csv_to_db' ), __( 'CSV Importer', 'wp_csv_to_db' ), 'manage_options', 'wp_csv_to_db_menu_page', array( $this, 'wp_csv_to_db_menu_page' ) ); // Add submenu page to "Settings"
+    $wp_csv_to_db_page = add_submenu_page( 'navbb', __( 'CSV Donation Importer', 'wp_csv_to_db' ), __( 'CSV Donation Import', 'wp_csv_to_db' ), 'manage_options', 'wp_csv_to_db_menu_page', array( $this, 'wp_csv_to_db_menu_page' ) ); // Add submenu page to "Settings"
     add_action( 'admin_print_scripts-' . $wp_csv_to_db_page, array( $this, 'wp_csv_to_db_admin_scripts' ) );  // Load our admin page scripts (our page only)
     add_action( 'admin_print_styles-' . $wp_csv_to_db_page, array( $this, 'wp_csv_to_db_admin_styles' ) );  // Load our admin page stylesheet (our page only)
   }
@@ -135,8 +133,8 @@ class wp_csv_to_db {
       			// Get row number from user
       			$num_var = $_POST[ 'sel_start_row' ] - 1;  // Subtract one to make counting easy on the non-techie folk!  (1 is actually 0 in binary)
       			// If user input number exceeds available .csv rows
-      			if ( $num_var > count( $values ) ) {
-    			    $error_message	 .= '* ' . __( 'Starting Row value exceeds the number of entries being updated to the database from the .csv file.', 'wp_csv_to_db' ) . '<br />';
+      			if ( ( $num_var > count( $values ) ) && ( ! empty( $values ) ) ) {
+    			    $error_message	 .= '* ' . __( 'Starting Row value exceeds the number of entries being updated to the database from the .csv file.' , 'wp_csv_to_db' ) . '<br />';
     			    $too_many	 = 'true';  // set alert variable
       			} else {
       			// Else splice array and remove number (rows) user selected
@@ -163,7 +161,7 @@ class wp_csv_to_db {
     			    $values_implode = implode( ',', $values );
 
 
-    			    // If "Update DB Rows" was checked
+    			    //If "Update DB Rows" was checked
     			    if ( isset( $_POST[ 'update_db' ] ) ) {
         				// Setup sql 'on duplicate update' loop
         				$updateOnDuplicate = ' ON DUPLICATE KEY UPDATE ';
@@ -266,7 +264,40 @@ class wp_csv_to_db {
 
       <h2><?php _e( 'WordPress CSV to Database Options', 'wp_csv_to_db' ); ?></h2>
 
+
       <p>This plugin allows you to insert CSV file data into your WordPress database table.</p>
+
+      <div>
+        <p>
+          <h4>Templates:</h4>
+          <a href="<?php echo plugins_url( '/uploads/bloodbank_donation.csv', __FILE__ );  ?>">New Donations Template</a><br>
+          <a href="<?php echo plugins_url( '/uploads/bloodbank_donation_update.csv', __FILE__ );  ?>">Update Donations Template</a>
+        </p>
+      </div>
+
+      <div>
+        <p>
+          <h4>Instructions:</h4>
+          Import New Donations:
+          <ol>
+            <li>Select the donations database.</li>
+            <li>Upload a csv file that uses the new donations template.</li>
+            <li>Leave the starting row at 2.</li>
+            <li>Select the Disable "auto_increment" Column option.</li>
+            <li>Do not select the Update Existing Donations option.</li>
+          </ol>
+          <br>
+          Update Existing Donations:
+          <ol>
+            <li>Select the donations database.</li>
+            <li>Upload a csv file that uses the update donations template.</li>
+            <li>Leave the starting row at 2.</li>
+            <li>Do not select the Disable "auto_increment" Column option.</li>
+            <li>Select the Update Existing Donations option.</li>
+          </ol>
+        </p>
+      </div>
+
 
       <div class="wpcsvdb-settings-grid wpcsvdb-main-cont">
     		<form id="wp_csv_to_db_form" method="post" action="" enctype="multipart/form-data">
@@ -294,14 +325,6 @@ class wp_csv_to_db {
       						?>
     				    </select>
     				  </td>
-              <td>
-                <p>
-                  Templates:
-                </p>
-                <a href="<?php echo plugins_url( '/uploads/bloodbank_donation.csv', __FILE__ );  ?>">New Donations Example</a><br>
-                <a href="<?php echo plugins_url( '/uploads/bloodbank_donation_update.csv', __FILE__ );  ?>">Update Existing Donations Example</a>
-
-              </td>
     			  </tr>
     			  <tr valign="top"><th scope="row"><?php _e( 'Select Input File:', 'wp_csv_to_db' ); ?></th>
     				  <td>

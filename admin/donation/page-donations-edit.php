@@ -194,7 +194,8 @@ function navbb_donation_render_edit_donation_page(){
 					<div class="navbb-row-content">
 						<select name="outcome" id="outcome" class="navbb-row-input">
 							<option value="" selected="selected" disabled hidden>Select Outcome</option>
-							<option value="Success" <?php if( "Success" == $current_outcome ): ?> selected="selected"<?php endif; ?>>Successful</option>
+							<option value="Success" <?php if( "Success" == $current_outcome ): ?> selected="selected"<?php endif; ?>>Successful: 2 Units</option>
+              <option value="SuccessOneUnit" <?php if( "SuccessOneUnit" == $current_outcome ): ?> selected="selected"<?php endif; ?>>Successful: 1 Unit</option>
 							<option value="Failure" <?php if( "Failure" == $current_outcome ): ?> selected="selected"<?php endif; ?>>Not Successful</option>
 							<option value="Ineligible" <?php if( "Ineligible" == $current_outcome ): ?> selected="selected"<?php endif; ?>>Ineligible</option>
 						</select>

@@ -41,10 +41,6 @@ if ( is_admin() ) {
 	require_once plugin_dir_path( __FILE__ ) . 'admin/meta-box-donors.php';											//displays html
 
 
-	//require_once plugin_dir_path( __FILE__ ) . 'rs-csv-importer-master/rs-csv-importer.php';  	//located in tools
-	//require_once plugin_dir_path( __FILE__ ) . 'wp-csv-to-database/main.php';  									//located in settings
-	//require_once plugin_dir_path( __FILE__ ) . 'navbb-donations-import/navbb-donations-importer.php';
-
 
 
 	require_once plugin_dir_path( __FILE__ ) . 'admin/ajax-callbacks.php';											//All functions for ajax processing
@@ -98,4 +94,7 @@ function navbb_add_dashboardlevel_menus() {
 
 }
 	//This adds our csv importer. needs to be here as it has a dependency on the functions above
-	require_once plugin_dir_path( __FILE__ ) . 'admin/importer/main.php';
+	require_once plugin_dir_path( __FILE__ ) . 'admin/importer/donation-importer/main.php';
+  require_once plugin_dir_path( __FILE__ ) . 'admin/importer/donor-owner-importer/navbb-csv-importer.php';  	//located in tools
+
+  require_once plugin_dir_path( __FILE__ ) . 'admin/page-settings.php';

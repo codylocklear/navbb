@@ -42,9 +42,6 @@ function navbb_display_dashboard_page() {
     $ownertype = get_post_meta($owner_id, '_navbb_owners_ownertype', true);
 
 		$location = get_post_meta($owner_id , '_navbb_owners_donation_location', true);
-    // if( "Kennel Club" == $ownertype ){
-    //   $location;
-    // }
 
 		//Retrieve all donation information for each donor
 		$donation = $wpdb->get_results(
@@ -76,17 +73,13 @@ function navbb_display_dashboard_page() {
 	echo "<div class='navbb-dashboard-page-container'>";
 	echo "<h1>" . esc_html( get_admin_page_title() ) . "</h1>";
 
-///**Dynamic Table**///
 	echo "<h3>Active Donors Table</h3>";
-	echo "<select id='navbb-dashboard-location'>";
-	echo "<option value='' selected='selected' disabled hidden>Select Filter</option>";
-	echo "<option value='All'>All Donors</option>";
-	echo "<option value='Bristow'>Bristow</option>";
-	echo "<option value='Richmond'>Richmond</option>";
-	echo "<option value='Stafford'>Stafford</option>";
-	echo "<option value='Emergency'>Emergency</option>";
-	echo "<option value='Hunt Club'>Hunt Club</option>";
-	echo "</select>";
+  $options_markup = option_locations( 'Select Filter' );
+  $options_markup .= "<option value='Emergency'>Emergency</option>";
+  $options_markup .= "<option value='Hunt Club'>Hunt Club</option>";
+  $options_markup .= "<option value='All'>All Donors</option>";
+  $select_markup = select_locations( $options_markup, 'navbb-dashboard-location' );
+  echo $select_markup;
 	echo "<button onclick='updateDashboard()' class='button'>Refresh</button><br><br>";
 
 //Start Active Donor Table
@@ -123,7 +116,7 @@ function navbb_display_dashboard_page() {
 
 	foreach($donorObjects as $donorObject){
 		//If statement: if the donor's next donation date is within 30 days of expiring lab work, add to the table
-		if( date('Y-m-d', strtotime($donorObject['lastdonationdate'] . ' + 30 days')) > date('Y-m-d', strtotime($donorObject['acquired'] . ' + 335 days'))   ) {
+		if( date('Y-m-d', strtotime($donorObject['lastdonationdate'] . ' + 30 days')) > date('Y-m-d', strtotime($donorObject['acquired'] . ' + 335 days')) &&  $donorObject['status'] == 'active' ) {
 			echo "<tr>";
 			echo "<td><a href='". esc_url( admin_url( 'post.php?post='. $donorObject['donor_id'] .'&action=edit' ) ) ."'>". $donorObject['first_name']."</a></td>";
 			echo "<td><a href='". esc_url( admin_url( 'post.php?post='. $donorObject['owner_id'] .'&action=edit' ) ) ."'>". $donorObject['owner_name']."</a></td>";

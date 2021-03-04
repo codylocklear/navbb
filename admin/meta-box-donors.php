@@ -396,16 +396,7 @@ function navbb_donors_build_donation_meta_box( $post ){
     $donation_date = ( isset( $donation->donation_date ) ? $donation->donation_date : '');
     $amount_donated = ( isset( $donation->amount_donated ) ? $donation->amount_donated : '');
     $jugular = ( isset( $donation->vein) ? $donation->vein : '');
-	  $current_outcome = ( isset( $donation->outcome ) ? $donation->outcome : '');
-    if($current_outcome == "Success"){
-      $outcome = "Successful" ;
-    } elseif ($current_outcome == "Failure") {
-      $outcome =  "Not Successful";
-    } elseif ($current_outcome == "Ineligible") {
-      $outcome = "Ineligible";
-    } else {
-      $outcome = "";
-    };
+    $outcome = check_donation_outcome(isset( $donation->outcome ) ? $donation->outcome : '');
 
     echo "<tr>";
     echo "<td>".$donation_number."</td>";
@@ -1054,12 +1045,12 @@ function my_error_notice() {
       $post_id = get_the_ID();
       $today = date("Y-m-d");
       $date_acquired = get_post_meta( $post_id, '_navbb_donors_acquired', true );
-      if(date('Y-m-d', strtotime($date_acquired . ' + 335 days')) < $today) {
+      $donor_status = get_post_meta( $post_id, '_navbb_donors_status', true);
+      if( date( 'Y-m-d', strtotime( $date_acquired . ' + 335 days' ) ) < $today && $donor_status == 'active' ) {
         echo '<div class="notice error is-dismissible">
-               <p>The lab work for this donor is either expiring soon or has expired already.</p>
+                <p>The lab work for this donor is either expiring soon or has expired already.</p>
               </div>';
       }
     }
   }
-
 }

@@ -52,13 +52,7 @@ function navbb_display_donations_page() {
 		$blood_type = get_post_meta($donation->donor_id, '_navbb_donors_bloodtype',true);
 		$owner_id = get_post_meta($donation->donor_id, '_navbb_donors_owner_id',true);
 		$owner_name = get_post_meta($owner_id, '_navbb_owners_first_name',true) . " " . get_the_title($owner_id);
-		if ($donation->outcome == "Failure") {
-			$outcome = "Not Successful";
-		} elseif ($donation->outcome == "Success") {
-			$outcome = "Successful";
-		} else {
-			$outcome = $donation->outcome;
-		}
+    $outcome = check_donation_outcome(isset( $donation->outcome ) ? $donation->outcome : '');
 
 		echo "<tr>";
 		echo "<td><a href='". esc_url( admin_url( 'post.php?post='. ($donation->donor_id) .'&action=edit' ) ) ."'>". $first_name."</a></td>";

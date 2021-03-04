@@ -216,7 +216,7 @@ Example: [gist](https://gist.github.com/hissy/fe0aa2582b78394a3a82)
 
 = really_simple_csv_importer_class =
 
-This filter provides availability to completely replace the `RS_CSV_Importer::save_post` method.
+This filter provides availability to completely replace the `NAVBB_CSV_Importer::save_post` method.
 
 Example: [gist](https://gist.github.com/hissy/1ea54a46fd07be9f4334)
 

@@ -5,7 +5,7 @@
  *
  * @package Really Simple CSV Importer
  */
-class RS_CSV_Helper {
+class NAVBB_CSV_Helper {
 
 	const DELIMITER = ",";
 

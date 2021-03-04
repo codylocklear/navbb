@@ -19,7 +19,7 @@ function navbb_enqueue_admin_js_and_css() {
 	wp_enqueue_style( 'admin' );
 
 	//This sets the spacing for input forms in metaboxes
-	wp_register_style( 'navbb-metabox', plugins_url('css/navbb-metabox.css',__FILE__ ), array(), '1.0.2', 'all' );
+	wp_register_style( 'navbb-metabox', plugins_url('css/navbb-metabox.css',__FILE__ ), array(), '1.0.3', 'all' );
 	wp_enqueue_style( 'navbb-metabox' );
 
 	//Datatables and General CSS Style for Tables

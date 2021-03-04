@@ -1,0 +1,5 @@
+post_title,post_id,post_type,post_status,_navbb_owners_ownertype,_navbb_owners_internalOwnerID,_navbb_owners_first_name,_navbb_owners_email,_navbb_owners_phone_number,_navbb_owners_donation_location,_navbb_owners_address_1,_navbb_owners_address_2,_navbb_owners_city,_navbb_owners_state,_navbb_owners_postcode,_navbb_owners_notes
+Owner Last Name,(Leave Blank),navbb_owners,publish,Individual,0XXX,Cody,test@gmail.com,547-123-4444,Bristow,1234 Cotton lane,,Purcellville,Virginia,12345,Any Text you Want
+Lincoln,,navbb_owners,publish,Kennel Club,0XXX,Cody,test@gmail.com,547-123-4444,Richmond,1234 Cotton lane,,Purcellville,Virginia,12345,Any Text you Want
+Washington,,navbb_owners,publish,Individual,,,,,Stafford,,,,,,
+Jefferson,,navbb_owners,publish,Kennel Club,,,,,Not Applicable,,,,,,
