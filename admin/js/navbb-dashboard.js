@@ -31,6 +31,15 @@ jQuery(document).ready(function($) {
         "orderClasses": false
       }
   );
+  $('#navbb_pending_donor_table').DataTable({
+        "columns": [
+          { "data": "first_name" },
+          { "data": "owner" },
+          { "data": "location" },
+        ],
+        "order": [[ 2, "asc" ]],
+      }
+  );
   $('#lab_table').DataTable({
         "columns": [
           { "data": "first_name" },

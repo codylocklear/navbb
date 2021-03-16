@@ -1,4 +1,4 @@
-//Used for Quick Edits of posts, specifically for donors
+//Used for Quick Edits of posts, specifically for donors and owners
 jQuery(document).ready(function($) {
   // it is a copy of the inline edit function
   var wp_inline_edit_function = inlineEditPost.edit;
@@ -22,14 +22,15 @@ jQuery(document).ready(function($) {
       var specific_post_edit_row = $( '#edit-' + id ),
           specific_post_row = $( '#post-' + id ),
           donor_owner = $( '.column-owner', specific_post_row ).text(),
-          donor_status = $( '.column-status', specific_post_row ).text(), //  remove $ sign
+          donor_status = $( '.column-status', specific_post_row ).text().toLowerCase(), //  remove $ sign
           donor_bloodtype = $( '.column-bloodtype', specific_post_row ).text(); //  remove $ sign
+          owner_location = $( '.column-location', specific_post_row ).text();
 
       // populate the inputs with column data
       $( ':input[name="owner"]', specific_post_edit_row ).val( donor_owner );
       $( ':input[name="status"]', specific_post_edit_row ).val( donor_status );
       $( ':input[name="bloodtype"]', specific_post_edit_row ).val( donor_bloodtype );
-
+      $( ':input[name="location"]', specific_post_edit_row ).val( owner_location );
     }
   }
 });

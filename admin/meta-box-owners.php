@@ -104,13 +104,13 @@ function navbb_owners_build_meta_box($post) {
   <hr>
 
   <div class="navbb-metabox-container">
-    <div class="navbb-column-left">
+    <div class="navbb-column-left-small">
       <p>Notes:</p>
-      <textarea rows="4"  class="navbb-notes" id="notes" name="notes" style="width:80%"><?php echo $current_notes; ?></textarea>
+      <textarea rows="10"  class="navbb-notes" id="notes" name="notes" style="width:80%"><?php echo $current_notes; ?></textarea>
     </div>
     <!--We need to query the database to find all of the dogs for this owner-->
-    <div class="navbb-column-right">
-      <div class="navbb-column-content">
+    <div class="navbb-column-right-big">
+      <!-- <div class="navbb-column-content"> -->
         <p>Donors:</p>
         <a href=' <?php echo esc_url( admin_url( "post-new.php?post_type=navbb_donors") )?> '>Create New Donor</a><br><br>
         <table class='navbb_table display' id='pets'>
@@ -118,6 +118,7 @@ function navbb_owners_build_meta_box($post) {
             <tr>
               <th>Donor Name</th>
               <th>Donor ID</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -138,13 +139,15 @@ function navbb_owners_build_meta_box($post) {
         $donor_id = $donor->post_id;
         $donor_internal_id = get_post_meta( $donor_id, '_navbb_donors_internalDonorID', true );
         $first_name = get_the_title($donor->post_id);
+        $status = get_donor_status( get_post_meta( $donor_id, '_navbb_donors_status',true ) );
 
         echo "<tr>";
         echo "<td><a href='". esc_url( admin_url( 'post.php?post='. $donor_id .'&action=edit' ) ) ."'>" . $first_name . "</a></td>";
         echo "<td>".$current_internalOwnerID."-".$donor_internal_id."</td>";
+        echo "<td>".$status."</td>";
         echo "</tr>";
       }
-      echo "</tbody></table></div></div></div>";
+      echo "</tbody></table></div></div>";
 
     ?>
       <script type="text/javascript">

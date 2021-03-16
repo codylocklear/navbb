@@ -25,12 +25,17 @@ function checkDateFormat( $dateString ){
 	return ctype_digit("$y$m$d") && checkdate($m, $d, $y);
 }
 
-//Outpust the correct html when pulling donation outcome from the database
+//**** SANITIZE POST META WHEN WE FETCH AND DISPLAY IT ****//
+
+//** Donation **//
+//Donation outcome
 function check_donation_outcome( $input ){
   if ($input == "Success") {
     $outcome = "Successful: 2 Units";
   } elseif ($input == "SuccessOneUnit") {
     $outcome = "Successful: 1 Unit";
+  } elseif ($input == "Ineligible") {
+    $outcome = "Ineligible";
   } elseif ($input == "Failure") {
     $outcome = "Not Successful";
   } else {
@@ -39,8 +44,56 @@ function check_donation_outcome( $input ){
   return $outcome;
 }
 
+//** Donors **//
+//Formats the date provided and converts into years
+function get_donor_age( $date ) {
+  return intval( date( 'Y', time( ) - strtotime( $date ) ) ) - 1970;
+}
 
-///// These are for the Settings functions /////
+function get_full_donorID( $donor_id ){
+  $internalDonorID = get_post_meta( $donor_id, '_navbb_donors_internalDonorID', true );
+  $owner_id = get_post_meta( $donor_id, '_navbb_donors_owner_id', true );
+  $internalOwnerID = ( get_post_meta( $owner_id, '_navbb_owners_internalOwnerID', true ) ?: "Not Set" );
+
+  $fullDonorID = $internalOwnerID . "-" . $internalDonorID;
+  return $fullDonorID;
+}
+
+function get_donor_status ( $status ){
+  if( $status == "active" ){
+    $output = "Active";
+  } elseif ( $status == "pending" ) {
+    $output = "Pending";
+  } elseif ( $status == "retired" ) {
+    $output = "Retired";
+  } elseif ( $status == "not accepted" ){
+    $output = "Not Accepted";
+  } else {
+    $output = "";
+  }
+  return $output;
+}
+
+
+//** Owners **//
+function get_owner_fullname( $owner_id = "", $orderby = true ){
+  $owner_fullname = "";
+    if( !empty( $owner_id ) ) {
+      $ownertype = get_post_meta( $owner_id, '_navbb_owners_ownertype', true );
+      if( $ownertype == "Kennel Club" ){
+        $owner_fullname = html_entity_decode( get_the_title( $owner_id ) );
+      } else {
+        if( $orderby == true ){
+          $owner_fullname = html_entity_decode( get_the_title( $owner_id ) ) . " , ". ( get_post_meta( $owner_id, '_navbb_owners_first_name', true ) ?: "Not Set" );
+        } else {
+          $owner_fullname = ( get_post_meta( $owner_id, '_navbb_owners_first_name', true ) ?: "Not Set" ) . " " . html_entity_decode( get_the_title( $owner_id ) );
+        }
+      }
+    }
+  return $owner_fullname;
+}
+
+//Gets all location options from Settings
 function get_locations(){
   $originalString = get_option('drops_owner_locations');
   $locations = array_map('trim', explode(',', $originalString));
@@ -48,7 +101,7 @@ function get_locations(){
   return $locations;
 }
 
-//Outputs all options in the settings as options with appropriate markup
+//Outputs all options in the settings as option values with appropriate markup
 function option_locations( $placeholder, $current_location = NULL ){
   $locations = get_locations();
   if( ! empty ( $locations ) && is_array( $locations ) ){

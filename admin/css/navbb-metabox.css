@@ -14,10 +14,22 @@
   width: 50%;
 }
 
+/* Three equal sized columns */
 .navbb-column-three {
   float: left;
   width: 33%;
 }
+
+/* one small left, one big right */
+.navbb-column-left-small {
+  float: left;
+  width: 33%;
+}
+.navbb-column-right-big {
+  float: left;
+  width: 66%;
+}
+
 
 /* Clear floats after the columns */
 .navbb-lab-column-row:after {

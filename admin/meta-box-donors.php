@@ -28,12 +28,6 @@ function navbb_donors_meta_box_enqueue( $pagehook ) {
 }
 
 
-//Used as a response after updating the donor's birthday
-function getAge($date) {
-  return intval(date('Y', time() - strtotime($date))) - 1970;
-}
-
-
 ////////Donor Info Box////////
 function navbb_donors_build_information_meta_box( $post ){
 
@@ -60,27 +54,11 @@ function navbb_donors_build_information_meta_box( $post ){
   $current_ownertype = get_post_meta( $current_owner_id, '_navbb_owners_ownertype', true );
   $current_donor_notes = get_post_meta( $post->ID, '_navbb_donors_donor_notes', true );
 
-  //Set the Owner's Full Name
-  if (empty($current_owner_id)){
-    $owner_fullname = "";
-  } elseif($current_ownertype == "Kennel Club") {
-    $owner_fullname = get_the_title($current_owner_id);
-  } else {
-    $owner_fullname = get_the_title($current_owner_id) . " , ". ( get_post_meta( $current_owner_id, '_navbb_owners_first_name', true ) ?: "Not Set" );
-  }
+  $owner_fullname = get_owner_fullname( $current_owner_id, true );
 
-  //Calculate the age of the animal from their birthDate
-  if(empty($current_age)){
-    $age = "Not Set";
-  } else {
-    $age = getAge($current_age);
-  }
+  if( empty( $current_age ) ? $age = "Not Set" : $age = get_donor_age( $current_age ) );
 
-  if(empty($current_owner_id)){
-    $interalOwnerID = "Not Set";
-  } else {
-    $internalOwnerID = get_post_meta( $current_owner_id, '_navbb_owners_internalOwnerID', true );
-  }
+  if( empty( $current_owner_id ) ? $interalOwnerID = "Not Set" : $internalOwnerID = get_post_meta( $current_owner_id, '_navbb_owners_internalOwnerID', true ) );
 
 	?>
   <div class="navbb-metabox-container">

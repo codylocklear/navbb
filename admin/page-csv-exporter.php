@@ -79,11 +79,7 @@ function handle_owners_to_csv_action() {
     $postcode = get_post_meta( $owner->ID, '_navbb_owners_postcode', true );
     $notes = get_post_meta( $owner->ID, '_navbb_owners_notes', true );
 
-    if ($ownertype == "Kennel Club"){
-      $owner_fullname = $owner_name;
-    } else {
-      $owner_fullname = $owner_name . " , ". $first_name;
-    };
+    $owner_fullname = get_owner_fullname( $owner->ID , true );
 
     $ownerObjects[] = [
       'database_Owner_ID'=> $owner->ID,
@@ -153,7 +149,6 @@ function handle_donors_to_csv_action() {
     //Retrieve all information about the donor stored in metadata
     $donor_name = html_entity_decode(get_the_title( $donor->ID ));
     $owner_id = get_post_meta( $donor->ID, '_navbb_donors_owner_id', true );
-    $internalDonorID = get_post_meta( $donor->ID, '_navbb_donors_internalDonorID', true );
     $microchip = get_post_meta( $donor->ID, '_navbb_donors_microchip', true );
     $specie = get_post_meta( $donor->ID, '_navbb_donors_specie', true );
     $gender = get_post_meta( $donor->ID, '_navbb_donors_gender', true );
@@ -172,9 +167,9 @@ function handle_donors_to_csv_action() {
     $date_retired = get_post_meta( $donor->ID, '_navbb_donors_date_retired', true );
     $status = get_post_meta( $donor->ID, '_navbb_donors_status', true );
     $ownertype = get_post_meta( $owner_id, '_navbb_owners_ownertype', true );
-    $internalOwnerID = ( get_post_meta( $owner_id, '_navbb_owners_internalOwnerID', true ) ?: "Not Set" );
-    $ownertype = get_post_meta( $owner_id, '_navbb_owners_ownertype', true );
     $donor_notes = get_post_meta( $donor->ID, '_navbb_donors_donor_notes', true );
+    $fullDonorID = get_full_donorID( $donor->ID );
+    $owner_fullname = get_owner_fullname( $owner_id, true );
 
 		//Retrieve all donation information for each donor
 		$donation = $wpdb->get_results(
@@ -198,15 +193,6 @@ function handle_donors_to_csv_action() {
         $countsuccess = $countsuccess + 1;
       }
     }
-
-    $fullDonorID = $internalOwnerID . "-".$internalDonorID;
-    if (empty($owner_id)){
-      $owner_fullname = "";
-    } elseif($ownertype == "Kennel Club") {
-      $owner_fullname = html_entity_decode(get_the_title($owner_id));
-    } else {
-      $owner_fullname = html_entity_decode(get_the_title($owner_id)) . " , ". get_post_meta( $current_owner_id, '_navbb_owners_first_name', true );
-    };
 
     $donorObjects[] = [
       'database_Donor_ID'=> $donor->ID,
@@ -304,12 +290,13 @@ function handle_donations_to_csv_action() {
       $donationsTable . ".amount_potential," .
       $donationsTable . ".heartrate," .
       $donationsTable . ".donation_number," .
+      $donationsTable . ".donation_notes," .
       $donationsTable . ".outcome
       FROM `" . $donationsTable . "` INNER JOIN `" . $postsTable . "` ON " . $donationsTable . ".donor_id = " . $postsTable . ".id;" ;
 
   $result	= $wpdb->get_results( $tableQuery );
 
-  $sub = "Donation ID,Donor Id,Donor Name,Donation Date,Amount Donated,Recumbency,Vein,Weight,Temperature,Respiration,PCV,TS,CRT,MM,Amount Potential,Heartrate,Donation Number,Outcome,Specie,Bloodtype,Donor Type";
+  $sub = "Donation ID,Donor Id,Donor Name,Donation Date,Amount Donated,Recumbency,Vein,Weight,Temperature,Respiration,PCV,TS,CRT,MM,Amount Potential,Heartrate,Donation Number,Donation Notes,Outcome,Specie,Bloodtype,Donor Type";
 
   $fields		 = $sub . "\n"; // Get fields names
   $csv_file_name	 = $getTable . '_' . date( 'Ymd_His' ) . '.csv';

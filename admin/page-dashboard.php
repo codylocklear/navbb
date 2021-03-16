@@ -13,7 +13,7 @@ function navbb_dashboard_enqueue( $pagehook ) {
 	//Style and Javascript for our primary dashboard
 	wp_register_style( 'navbb-dashboard' , plugins_url( 'css/navbb-dashboard.css' , __FILE__ ), array( ), '1.0.1', 'all' );
 	wp_enqueue_style( 'navbb-dashboard' );
-	wp_enqueue_script( 'navbb-dashboard' , plugins_url( 'js/navbb-dashboard.js' , __FILE__ ), array( ) , '1.0.1' );
+	wp_enqueue_script( 'navbb-dashboard' , plugins_url( 'js/navbb-dashboard.js' , __FILE__ ), array( ) , '1.0.2' );
 	wp_localize_script('navbb-dashboard', 'navbb_WPURLS', array('adminUrl' => admin_url() ));  //Provides adminUrl as a local variable in our JS script
 }
 
@@ -34,7 +34,7 @@ function navbb_display_dashboard_page() {
 		$donor_id = $donor->ID;
 		$first_name = $donor->post_title;
 		$owner_id = get_post_meta($donor_id, '_navbb_donors_owner_id',true);
-		$owner_name = get_post_meta($owner_id, '_navbb_owners_first_name',true) . " " . get_the_title($owner_id);
+    $owner_name = get_owner_fullname( $owner_id, false );
 		$bloodtype = get_post_meta($donor_id, '_navbb_donors_bloodtype',true);
 		$acquired = get_post_meta($donor_id, '_navbb_donors_acquired', true);
 		$emergency_donor = get_post_meta($donor_id, '_navbb_donors_emergency_donor', true);
@@ -103,6 +103,22 @@ function navbb_display_dashboard_page() {
 	}
 	echo "</tbody></table><br><br><hr>";
 
+  echo "<h3>Pending Donors Table</h3>";
+  echo "<table class='navbb_table display' id='navbb_pending_donor_table'>";
+  echo "<thead><tr>";
+  echo "<th>First Name</th>";
+  echo "<th>Owner</th>";
+  echo "<th>Location</th>";
+  echo "</tr></thead><tbody>";
+  foreach($donorObjects as $donorObject){
+    if($donorObject['status'] =="pending"){
+      echo "<tr>";
+      echo "<td><a href='". esc_url( admin_url( 'post.php?post='. $donorObject['donor_id'] .'&action=edit' ) ) ."'>". $donorObject['first_name']."</a></td>";
+      echo "<td><a href='". esc_url( admin_url( 'post.php?post='. $donorObject['owner_id'] .'&action=edit' ) ) ."'>". $donorObject['owner_name']."</a></td>";
+      echo "<td>".$donorObject['location']."</td>";
+    }
+  }
+  echo "</tbody></table><br><br><hr>";
 
 ///***Lab Work Table***///
 	echo "<h3>Lab Work</h3>";

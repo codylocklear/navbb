@@ -63,26 +63,18 @@ add_action( 'manage_navbb_donors_posts_custom_column', 'navbb_donors_table_conte
 function navbb_donors_table_content( $column_name, $post_id ) {
   if ($column_name == 'owner') {
     $owner_id = get_post_meta( $post_id, '_navbb_donors_owner_id', true );
-		$owner_type = get_post_meta( $owner_id, '_navbb_owners_ownertype', true );
-		if($owner_type == "Kennel Club"){
-				$owner_name = get_the_title($owner_id);
-		} else {
-				$owner_name = get_the_title($owner_id) . ", " .  ( get_post_meta($owner_id, '_navbb_owners_first_name', true) ?: "Not Set" );
-		}
+    $owner_name = get_owner_fullname( $owner_id, true );
     echo $owner_name ;
   }
 	if ($column_name == 'internalDonorID') {
-		$owner_id = get_post_meta( $post_id, '_navbb_donors_owner_id', true );
-		$internalOwnerID = get_post_meta( $owner_id, '_navbb_owners_internalOwnerID', true );
-		$internalDonorID = get_post_meta( $post_id, '_navbb_donors_internalDonorID', true );
-		$status = $internalOwnerID."-".$internalDonorID;
-		echo $status;
+    $fullDonorID = get_full_donorID( $post_id );
+    echo $fullDonorID;
 	}
   if ($column_name == 'status') {
-    echo get_post_meta( $post_id, '_navbb_donors_status', true );
+    echo get_donor_status( get_post_meta( $post_id, '_navbb_donors_status', true ) );
   }
   if ($column_name == 'age') {
-    echo get_post_meta( $post_id, '_navbb_donors_age', true );
+    echo get_donor_age( get_post_meta( $post_id, '_navbb_donors_age', true ) );
   }
 	if ($column_name == 'bloodtype') {
 		echo get_post_meta( $post_id, '_navbb_donors_bloodtype', true );
@@ -93,11 +85,11 @@ function navbb_donors_table_content( $column_name, $post_id ) {
 //This function changes the placeholder in the title box in add new donor
 add_filter( 'enter_title_here', 'navbb_donors_change_title_text' );
 function navbb_donors_change_title_text( $title ){
-     $screen = get_current_screen();
-     if  ( 'navbb_donors' == $screen->post_type ) {
-          $title = 'Enter Donor First Name';
-     }
-     return $title;
+  $screen = get_current_screen();
+  if  ( 'navbb_donors' == $screen->post_type ) {
+    $title = 'Enter Donor First Name';
+  }
+  return $title;
 }
 
 
@@ -144,15 +136,15 @@ function navbb_donors_orderby( $query ) {
  * quick_edit_custom_box allows to add HTML in Quick Edit
  * Please note: it files for EACH column, so it is similar to manage_posts_custom_column
  */
-add_action('bulk_edit_custom_box',  'misha_quick_edit_fields', 10, 2);
-add_action('quick_edit_custom_box',  'misha_quick_edit_fields', 10, 2);
-function misha_quick_edit_fields( $column_name, $post_type ) {
+add_action('bulk_edit_custom_box',  'navbb_quick_edit_donor_fields', 10, 2);
+add_action('quick_edit_custom_box',  'navbb_quick_edit_donor_fields', 10, 2);
+function navbb_quick_edit_donor_fields( $column_name, $post_type ) {
 
 	switch( $column_name ) :
 		case 'owner': {
 
 			// you can also print Nonce here, do not do it ouside the switch() because it will be printed many times
-			wp_nonce_field( 'misha_q_edit_nonce', 'misha_nonce' );
+			wp_nonce_field( 'navbb_q_edit_donor_nonce', 'navbb_nonce' );
 
 			// please note: the <fieldset> classes could be:
 			// inline-edit-col-left, inline-edit-col-center, inline-edit-col-right
@@ -163,7 +155,6 @@ function misha_quick_edit_fields( $column_name, $post_type ) {
 			// for the FIRST column only, it opens <fieldset> element, all our fields will be there
 			echo '<fieldset class="inline-edit-col-right">
 				<div class="inline-edit-col">';
-
 
 			echo '
 					<div class="inline-edit-group wp-clearfix">
@@ -228,14 +219,14 @@ function misha_quick_edit_fields( $column_name, $post_type ) {
 /*
  * Quick Edit Save
  */
-add_action( 'save_post', 'misha_quick_edit_save' );
-function misha_quick_edit_save( $post_id ){
+add_action( 'save_post', 'navbb_quick_edit_donor_save' );
+function navbb_quick_edit_donor_save( $post_id ){
 	// check user capabilities
 	if ( !current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
 	// check nonce
-	if ( !wp_verify_nonce( $_POST['misha_nonce'], 'misha_q_edit_nonce' ) ) {
+	if ( !wp_verify_nonce( $_POST['navbb_nonce'], 'navbb_q_edit_donor_nonce' ) ) {
 		return;
 	}
 	// update the owner
@@ -253,11 +244,11 @@ function misha_quick_edit_save( $post_id ){
 }
 
 
-add_action( 'admin_enqueue_scripts', 'misha_enqueue_quick_edit_population' );
-function misha_enqueue_quick_edit_population( $pagehook ) {
+add_action( 'admin_enqueue_scripts', 'navbb_enqueue_quick_edit_population' );
+function navbb_enqueue_quick_edit_population( $pagehook ) {
 	// do nothing if we are not on the target pages
 	if ( 'edit.php' != $pagehook ) {
 		return;
 	}
-	wp_enqueue_script( 'populatequickedit', plugins_url('js/populate.js',__FILE__ ), array( 'jquery' , 'jquery-ui-autocomplete' ) , '1.0.0');
+	wp_enqueue_script( 'populatequickedit', plugins_url('js/post-edit-populate.js',__FILE__ ), array( 'jquery' , 'jquery-ui-autocomplete' ) , '1.0.2');
 }
