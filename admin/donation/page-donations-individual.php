@@ -35,6 +35,7 @@ function navbb_donation_render_individual_donation_page(){
 	$current_respiration = ( isset( $donation->respiration ) ? $donation->respiration : '');
 	$current_pcv = ( ($donation->pcv != 0) ? $donation->pcv : '');
 	$current_ts = ( ($donation->ts != 0) ? $donation->ts : '');
+  $current_collections = ( ( $donation->collections != 0 ) ? $donation->collections : '');
 	$current_donation_notes = ( isset( $donation->donation_notes ) ? $donation->donation_notes : '');
 
 	$current_holder_id = ( isset( $donation->holder ) ? $donation->holder : '');
@@ -162,6 +163,11 @@ function navbb_donation_render_individual_donation_page(){
 					<label class="navbb-row-saved-title">TS (g/dl):</label>
 					<div class=navbb-row-saved-value><?php echo $current_ts; ?></div>
 				</div>
+
+        <div class="navbb-row-container">
+          <label class="navbb-row-saved-title">Number of Collection Units:</label>
+          <div class=navbb-row-saved-value><?php echo $current_collections; ?></div>
+        </div>
 
 				<div class="navbb-row-container">
 					<label class="navbb-row-saved-title">Holder:</label>

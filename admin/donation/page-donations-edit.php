@@ -35,6 +35,7 @@ function navbb_donation_render_edit_donation_page(){
 	$current_respiration = ( isset( $donation->respiration ) ? $donation->respiration : '' );
 	$current_pcv = ( ( $donation->pcv != 0 ) ? $donation->pcv : '' );
 	$current_ts = ( ( $donation->ts != 0 ) ? $donation->ts : '' );
+  $current_collections = ( ( $donation->collections != 0 ) ? $donation->collections: '' );
 	$current_donation_notes = ( isset( $donation->donation_notes ) ? $donation->donation_notes : '' );
 	$current_history = ( isset( $donation->history ) ? $donation->history : '' );
 	$current_physical_exam = ( isset( $donation->physical_exam ) ? $donation->physical_exam : '' );
@@ -174,6 +175,20 @@ function navbb_donation_render_edit_donation_page(){
 					<label for="ts" class="navbb-row-title">TS (g/dl):</label>
 					<input type="number" name="ts" id="ts" class="navbb-row-input" value="<?php echo $current_ts; ?>" step="0.1">
 				</div>
+
+        <div class="navbb-row-container">
+          <label for="collections" class="navbb-row-title">Number of Collection Units:</label>
+          <div class="navbb-row-content">
+            <select name="collections" id="collections" class="navbb-row-input">
+              <option value="" selected="selected" disabled hidden>Select Number</option>
+              <option value="1" <?php if( "1" == $current_collections ): ?> selected="selected"<?php endif; ?>>One</option>
+              <option value="2" <?php if( "2" == $current_collections ): ?> selected="selected"<?php endif; ?>>Two</option>
+              <option value="3" <?php if( "3" == $current_collections ): ?> selected="selected"<?php endif; ?>>Three</option>
+              <option value="4" <?php if( "4" == $current_collections ): ?> selected="selected"<?php endif; ?>>Four</option>
+              <option value="5" <?php if( "5" == $current_collections ): ?> selected="selected"<?php endif; ?>>Five</option>
+            </select>
+          </div>
+        </div>
 
 				<div class="navbb-row-container">
 					<label for="holder" class="navbb-row-title">Holder:</label>

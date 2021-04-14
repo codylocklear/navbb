@@ -162,6 +162,7 @@ function ajax_last_donation() {
         'vein' => ($individualDonation->vein),
         'crt' => ($crt_value),
         'mm' => ($individualDonation->mm),
+        'collections' => ($individualDonation->collections),
         'weight' => ($individualDonation->weight),
         'temperature' => ($individualDonation->temperature),
         'heartrate' => ($individualDonation->heartrate),

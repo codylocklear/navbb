@@ -270,6 +270,11 @@ if ( isset( $_GET['donor_id'] ) ) {
 				<div class="navbb-row-saved-value" id="previous_mm"></div>
 			</div>
 
+      <div class="navbb-row-container">
+        <label class="navbb-row-saved-title">Number of Collection Units:</label>
+        <div class="navbb-row-saved-value" id="previous_collections"></div>
+      </div>
+
 			<div class="navbb-row-container">
 	      <label class="navbb-row-saved-title">Weight (kg):</label>
 	      <div class="navbb-row-saved-value" id="previous_weight"></div>

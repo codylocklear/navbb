@@ -48,6 +48,7 @@ function donorDonationChange(val){
 					document.getElementById("previous_vein").innerHTML = response['vein'];
 					document.getElementById("previous_crt").innerHTML = response['crt'];
 					document.getElementById("previous_mm").innerHTML = response['mm'];
+          document.getElementById("previous_collections").innerHTML = response['collections'];
 					document.getElementById("previous_weight").innerHTML = response['weight'];
 					document.getElementById("previous_temperature").innerHTML = response['temperature'];
 					document.getElementById("previous_heartrate").innerHTML = response['heartrate'];

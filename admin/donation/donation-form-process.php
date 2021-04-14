@@ -29,6 +29,7 @@ function donation_new() {
 		$respiration = isset($_POST['respiration']) ? $_POST['respiration'] : '' ;
 		$pcv = isset($_POST['pcv']) ? $_POST['pcv'] : '' ;
 		$ts = isset($_POST['ts']) ? $_POST['ts'] : '' ;
+    $collections = isset($_POST['collections']) ? $_POST['collections'] : '';
 		$donation_notes = isset($_POST['donation_notes']) ? $_POST['donation_notes'] : '' ;
 		$donation_number = ($wpdb->get_var("SELECT COUNT(*) FROM " . $wp_prefix . "navbb_donations WHERE donor_id = $donor_id")) + 1;
 		$holder = isset($_POST['holder']) ? $_POST['holder'] : '' ;
@@ -50,6 +51,7 @@ function donation_new() {
 			'respiration' => $respiration,
 			'pcv' => $pcv,
 			'ts'=> $ts,
+      'collections'=>$collections,
 			'donation_notes' => sanitize_textarea_field($donation_notes),
 			'donation_number' => $donation_number,
 			'holder' => $holder,
@@ -96,6 +98,7 @@ function donation_update() {
 		$respiration = isset($_POST['respiration']) ? $_POST['respiration'] : '' ;
 		$pcv = isset($_POST['pcv']) ? $_POST['pcv'] : '' ;
 		$ts = isset($_POST['ts']) ? $_POST['ts'] : '' ;
+    $collections = isset($_POST['collections']) ? $_POST['collections'] : '';
 		$donation_notes = isset($_POST['donation_notes']) ? $_POST['donation_notes'] : '' ;
 		$holder = isset($_POST['holder']) ? $_POST['holder'] : '' ;
 		$poker = isset($_POST['poker']) ? $_POST['poker'] : '' ;
@@ -116,6 +119,7 @@ function donation_update() {
 			'respiration' => $respiration,
 			'pcv'=> $pcv,
 			'ts' => $ts,
+      'collections'=>$collections,
 			'donation_notes' => sanitize_textarea_field( $donation_notes ),
 			'holder' => $holder,
 			'poker' => $poker,
